@@ -9,7 +9,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 function InfoTab() {
   const playerList = useRecoilValue(players);
   const [clientConfigState, setConfig] = useRecoilState(clientConfig);
-  const [socketConfig, setSocketConfig] = useRecoilState(socketConfigAtom);
+  const socketConfig = useRecoilValue(socketConfigAtom);
   const darkMode = useRecoilValue(isDarkMode);
 
   const changeColor = (event: any) => {
@@ -41,7 +41,7 @@ function InfoTab() {
     }));
   };
 
-  const fillCanvas = (e: any) => {
+  const fillCanvas = () => {
     setConfig((prevConfig) => ({
       ...prevConfig,
       backgroundColor: clientConfigState.strokeStyle,
