@@ -50,7 +50,7 @@ function InfoTab() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-between border-r p-4 dark:bg-black w-fit bg-white dark:text-white text-black`}
+      className={`flex flex-col items-center justify-between border-r p-4 dark:bg-black w-fit h-full bg-white dark:text-white text-black`}
     >
       <div>
         <div class={`w-full p-4 border `}>
@@ -60,7 +60,7 @@ function InfoTab() {
       </div>
       <div id="menu" className="w-max h-fit p-4 grid grid-cols-2 gap-2">
         <div
-          className="menu-item hidden md:flex col-span-2 justify-center"
+          className="menu-item flex col-span-2 justify-center w-full"
           id="width-input-div"
           title="Thickness: 1"
         >
@@ -72,7 +72,7 @@ function InfoTab() {
               label="Thickness"
               onChange={changeWidth}
               title={`Thickness`}
-              sx={{ color: `${darkMode ? `white` : `black`}`, width: "100%" }}
+              sx={{ color: `${darkMode ? `white` : `black`}`, width: "auto" }}
             >
               <MenuItem
                 value={1}
@@ -114,7 +114,7 @@ function InfoTab() {
           </FormControl>
         </div>
         <div
-          className="menu-item hidden md:flex col-span-2 justify-center"
+          className="menu-item flex col-span-2 justify-center w-full px-0"
           title="Choose color"
         >
           <input
@@ -122,12 +122,12 @@ function InfoTab() {
             type="color"
             height="200px"
             width="300px"
-            defaultValue={isDarkMode ? `white` : `black`}
+            defaultValue={clientConfigState.strokeStyle}
             onChange={changeColor}
           />
         </div>
 
-        <div className="menu-item hidden md:flex ">
+        <div className="menu-item flex ">
           <button
             id="clear-button"
             title="Clear fullscreen"
@@ -139,7 +139,7 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item hidden md:flex">
+        <div className="menu-item flex">
           <button
             id="fill-button"
             title="Fill fullscreen"
@@ -151,7 +151,7 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item hidden md:flex">
+        <div className="menu-item flex">
           <button
             id="save-button"
             title="Download"

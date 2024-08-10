@@ -13,7 +13,9 @@ function Layout() {
       }`}
     >
       <Navbar />
-      <div class={`flex w-full min-h-screen pt-16 m-0 overflow-hidden`}>
+      <div
+        class={`flex justify-end items-center flex-col-reverse sm:items-start sm:justify-center sm:flex-row w-full min-h-screen pt-16 m-0 overflow-hidden`}
+      >
         <InfoTab />
         <Canvas />
       </div>

@@ -156,10 +156,9 @@ export const Canvas = () => {
 
   return (
     <div
-      class={`h-full w-full flex justify-center items-center dark:bg-black bg-white`}
+      class={`h-fit  w-full flex justify-center items-start dark:bg-black bg-white `}
     >
-      <div className="w-fit p-4 flex-col justify-center items-center">
-        {/* desktop */}
+      <div className="w-fit flex-col justify-center items-center">
         <div
           id="ai-guess"
           ref={guessDivRef}
@@ -171,8 +170,8 @@ export const Canvas = () => {
           ref={canvasDesktopRef}
           className="hidden md:flex md:desktop border border-lg rounded dark:border-white border-black cursor-crosshair"
           id="canvas-desktop"
-          height={`400px`}
-          width={`600px`}
+          height={`500px`}
+          width={`700px`}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseMove={handleDrawing}
@@ -185,8 +184,8 @@ export const Canvas = () => {
           ref={canvasMobileRef}
           className="flex md:hidden mobile border border-lg rounded dark:border-white border-black cursor-crosshair"
           id="canvas-mobile"
-          height="400px"
-          width="300px"
+          height="300px"
+          width="400px"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseMove={handleDrawing}

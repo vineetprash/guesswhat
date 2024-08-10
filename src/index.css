@@ -6,4 +6,10 @@ html {
   margin: 0;
   height: 100%;
   width: 100%;
+  overscroll-behavior: contain contain;
+  overscroll-behavior-block: contain;
+}
+
+canvas {
+  scroll-behavior: contain contain;
 }
