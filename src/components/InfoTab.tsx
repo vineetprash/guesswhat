@@ -50,7 +50,7 @@ function InfoTab() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-between border-r p-4 dark:bg-black w-fit h-full bg-white dark:text-white text-black`}
+      className={`flex flex-col items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 dark:bg-black w-fit h-full bg-white dark:text-white text-black transition-all duration-500`}
     >
       <div>
         <div class={`w-full p-4 border `}>

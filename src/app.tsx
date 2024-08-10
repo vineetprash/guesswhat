@@ -1,17 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { RecoilRoot } from "recoil";
+import { useRecoilValue } from "recoil";
 import Layout from "./components/Layout";
+import { isDarkMode } from "./states";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-  },
-]);
 export function App() {
+  const darkMode = useRecoilValue(isDarkMode);
   return (
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
+    <div className={darkMode ? `dark` : ``}>
+      <Layout />
+    </div>
   );
 }

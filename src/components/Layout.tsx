@@ -1,16 +1,11 @@
-import { useRecoilValue } from "recoil";
 import InfoTab from "./InfoTab";
 import { Canvas } from "./Canvas";
-import { isDarkMode } from "../states";
 import Navbar from "./Navbar";
 
 function Layout() {
-  const darkMode = useRecoilValue(isDarkMode);
   return (
     <div
-      className={`flex dark:bg-black bg-white w-full min-h-screen m-0 overflow-hidden ${
-        darkMode ? `dark` : ``
-      }`}
+      className={`flex dark:bg-black bg-white transition-all w-full min-h-screen m-0 overflow-hidden duration-500 `}
     >
       <Navbar />
       <div
