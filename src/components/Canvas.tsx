@@ -1,21 +1,15 @@
 // @ts-nocheck
-import React, { useRef, useState, useEffect, useMemo } from "react";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import FormatColorFillRoundedIcon from "@mui/icons-material/FormatColorFillRounded";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { clientConfig, isDarkMode } from "../states";
+import { useRef, useState, useEffect, useMemo } from "react";
+import { useRecoilState } from "recoil";
+import { clientConfig } from "../states";
 
 export const Canvas = () => {
-  const [clientConfigState, setConfig] = useRecoilState(clientConfig);
-  const darkMode = useRecoilValue(isDarkMode);
+  const [clientConfigState] = useRecoilState(clientConfig);
   const URL = "https://guess-what-ixoj.onrender.com";
-  const canvasContainerRef = useRef(null);
   const canvasDesktopRef = useRef(null);
   const canvasMobileRef = useRef(null);
 
   const guessDivRef = useRef(null);
-  const [canvasWidth, setCanvasWidth] = useState();
 
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState(null);

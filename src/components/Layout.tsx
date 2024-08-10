@@ -1,6 +1,5 @@
 import { useRecoilValue } from "recoil";
 import InfoTab from "./InfoTab";
-import MainCanvas from "./MainCanvas";
 import { Canvas } from "./Canvas";
 import { isDarkMode } from "../states";
 import Navbar from "./Navbar";
