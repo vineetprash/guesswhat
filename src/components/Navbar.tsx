@@ -7,8 +7,8 @@ function Navbar() {
   return (
     <div
       class={`${
-        darkMode ? `bg-slate-600 border-slate-400` : ``
-      } fixed top-0 left-0 w-full h-16 dark:bg-slate-600 dark:border-slate-400 bg-yellow-300 transition-all duration-500 opacity-75  border-b-2 p-4`}
+        darkMode ? `bg-slate-600 border-slate-400` : `bg-yellow-300`
+      } fixed top-0 left-0 w-full h-16 transition-all duration-500 opacity-75  border-b-2 p-4`}
     >
       <div className={`flex justify-center items-center w-full h-full m-0`}>
         <DarkModeToggle />
