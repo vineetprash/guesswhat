@@ -1,9 +1,11 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useMemo } from "react";
-import { useRecoilState } from "recoil";
-import { clientConfig } from "../states";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { clientConfig, isDarkMode } from "../states";
 
+const MIN_WIDTH = 0;
 export const Canvas = () => {
+  const darkMode = useRecoilValue(isDarkMode);
   const [clientConfigState] = useRecoilState(clientConfig);
   const URL = "https://guess-what-ixoj.onrender.com";
   const canvasDesktopRef = useRef(null);
@@ -18,14 +20,14 @@ export const Canvas = () => {
 
   useEffect(() => {
     const canvas =
-      window.screen.availWidth > 768
+      window.screen.availWidth > MIN_WIDTH
         ? canvasDesktopRef.current
         : canvasMobileRef.current;
     const context = canvas.getContext("2d");
     setCtx(context);
     setBoundings(canvas.getBoundingClientRect());
     context.strokeStyle = clientConfigState.strokeStyle;
-
+    fillCanvas();
     const updateBoundings = () => {
       setBoundings(canvas.getBoundingClientRect());
     };
@@ -98,7 +100,7 @@ export const Canvas = () => {
 
   const saveImage = () => {
     const canvas =
-      window.screen.availWidth > 768
+      window.screen.availWidth > MIN_WIDTH
         ? canvasDesktopRef.current
         : canvasMobileRef.current;
     const canvasDataURL = canvas.toDataURL();
@@ -110,7 +112,7 @@ export const Canvas = () => {
 
   const guessWhatsThat = async () => {
     const canvas =
-      window.screen.availWidth > 768
+      window.screen.availWidth > MIN_WIDTH
         ? canvasDesktopRef.current
         : canvasMobileRef.current;
     const canvasDataURL = canvas.toDataURL();
@@ -128,7 +130,7 @@ export const Canvas = () => {
 
   const clearCanvas = () => {
     const canvas =
-      window.screen.availWidth > 768
+      window.screen.availWidth > MIN_WIDTH
         ? canvasDesktopRef.current
         : canvasMobileRef.current;
     if (ctx) {
@@ -138,11 +140,11 @@ export const Canvas = () => {
 
   const fillCanvas = () => {
     const canvas =
-      window.screen.availWidth > 768
+      window.screen.availWidth > MIN_WIDTH
         ? canvasDesktopRef.current
         : canvasMobileRef.current;
     if (ctx) {
-      ctx.fillStyle = clientConfigState.strokeStyle;
+      ctx.fillStyle = clientConfigState.backgroundColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
   };
@@ -156,20 +158,26 @@ export const Canvas = () => {
 
   return (
     <div
-      class={`h-fit  w-full flex justify-center items-start mt-4 dark:bg-black bg-white transition-all duration-500 `}
+      class={`${
+        darkMode ? `bg-black ` : `bg-white`
+      } h-fit  w-full flex justify-center items-start mt-4 transition-all duration-500 `}
     >
       <div className="w-fit flex-col justify-center items-center shadow-md rounded p-4">
         <div
           id="ai-guess"
           ref={guessDivRef}
-          className="prompt-text p-4 text-sm md:text-lg dark:text-white text-black text-center"
+          className={`${
+            darkMode ? `text-white` : `text-black`
+          } prompt-text p-4 text-sm md:text-lg text-center`}
         >
           Draw something, I'll guess what it is :)
         </div>
         <canvas
           resize={true}
           ref={canvasDesktopRef}
-          className="hidden md:flex md:desktop border border-lg dark:border-slate-500 rounded  border-black cursor-crosshair "
+          className={`${
+            darkMode ? `border-slate-400` : `border-black`
+          } flex  border border-lg rounded  cursor-crosshair touch-none `}
           id="canvas-desktop"
           height={`500px`}
           width={`700px`}
@@ -181,10 +189,10 @@ export const Canvas = () => {
           onTouchMove={handleDrawing}
         ></canvas>
         {/* mobile */}
-        <canvas
+        {/* <canvas
           resize={true}
           ref={canvasMobileRef}
-          className="flex md:hidden mobile border border-lg rounded dark:border-white border-black cursor-crosshair touch-none"
+          className="flex md:hidden  border border-lg rounded dark:border-white border-black cursor-crosshair touch-none"
           id="canvas-mobile"
           height="300px"
           width="400px"
@@ -194,7 +202,7 @@ export const Canvas = () => {
           onTouchStart={handleMouseDown}
           onTouchEnd={handleMouseUp}
           onTouchMove={handleDrawing}
-        ></canvas>
+        ></canvas> */}
       </div>
     </div>
   );

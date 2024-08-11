@@ -4,13 +4,14 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import FormatColorFillRoundedIcon from "@mui/icons-material/FormatColorFillRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import PlayerList from "./PlayerList";
-import { FormControl, MenuItem, Select } from "@mui/material";
+import { useRef } from "preact/hooks";
 
 function InfoTab() {
   const playerList = useRecoilValue(players);
   const [clientConfigState, setConfig] = useRecoilState(clientConfig);
   const socketConfig = useRecoilValue(socketConfigAtom);
   const darkMode = useRecoilValue(isDarkMode);
+  const roomCodeRef = useRef(null);
 
   const changeColor = (event: any) => {
     setConfig((prevConfig) => ({
@@ -50,71 +51,39 @@ function InfoTab() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 dark:bg-black w-fit h-full bg-white dark:text-white text-black transition-all duration-500`}
+      className={`${
+        darkMode ? `bg-black text-white` : `bg-white text-black`
+      } gap-2 flex-col items-start md:items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 w-screen lg:w-fit h-full  transition-all duration-500`}
     >
-      <div>
-        <div class={`w-full p-4 border `}>
-          Room code: {socketConfig.roomCode}
-        </div>
-        <PlayerList playerList={playerList} />
-      </div>
-      <div id="menu" className="w-max h-fit p-4 grid grid-cols-2 gap-2">
+      <div
+        id="menu"
+        className="w-full  h-fit p-4 grid grid-cols-8 lg:grid lg:grid-cols-3 items-center mx-auto gap-2 "
+      >
         <div
-          className="menu-item flex col-span-2 justify-center w-full"
+          className="menu-item flex col-span-2 lg:col-span-3 justify-center "
           id="width-input-div"
           title="Thickness: 1"
         >
-          <FormControl>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={clientConfigState.strokeWidth}
-              label="Thickness"
-              onChange={changeWidth}
-              title={`Thickness`}
-              sx={{ color: `${darkMode ? `white` : `black`}`, width: "auto" }}
-            >
-              <MenuItem
-                value={1}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                1
-              </MenuItem>
-              <MenuItem
-                value={10}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                10
-              </MenuItem>
-              <MenuItem
-                value={20}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                20
-              </MenuItem>
-              <MenuItem
-                value={30}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                30
-              </MenuItem>
-              <MenuItem
-                value={40}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                40
-              </MenuItem>
-              <MenuItem
-                value={50}
-                sx={{ color: `${!darkMode ? `white` : `black`}` }}
-              >
-                50
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <select
+            label="Thickness"
+            onChange={changeWidth}
+            title={`Thickness`}
+            className={`${
+              darkMode
+                ? `bg-black text-white  border-slate-300  `
+                : `bg-white text-black border-slate-950 `
+            } w-32  border rounded `}
+          >
+            <option value={1}>1</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={30}>30</option>
+            <option value={40}>40</option>
+            <option value={50}>50</option>
+          </select>
         </div>
         <div
-          className="menu-item flex col-span-2 justify-center w-full px-0"
+          className="menu-item flex col-span-2 lg:col-span-3 justify-center w-full px-0 "
           title="Choose color"
         >
           <input
@@ -122,16 +91,17 @@ function InfoTab() {
             type="color"
             height="200px"
             width="300px"
+            className={`w-32`}
             defaultValue={clientConfigState.strokeStyle}
             onChange={changeColor}
           />
         </div>
 
-        <div className="menu-item flex ">
+        <div className="menu-item flex col-span-1">
           <button
             id="clear-button"
             title="Clear fullscreen"
-            className="p-1 border rounded w-fit h-fit"
+            className="p-1 border rounded w-fit h-fit bg-transparent"
             onClick={clearCanvas}
           >
             <DeleteOutlineRoundedIcon
@@ -139,11 +109,11 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item flex">
+        <div className="menu-item flex col-span-1">
           <button
             id="fill-button"
             title="Fill fullscreen"
-            className="p-1 border rounded w-fit h-fit"
+            className="p-1 border rounded w-fit h-fit bg-transparent"
             onClick={fillCanvas}
           >
             <FormatColorFillRoundedIcon
@@ -151,11 +121,11 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item flex">
+        <div className="menu-item flex col-span-1">
           <button
             id="save-button"
             title="Download"
-            className="p-1 border rounded w-fit h-fit"
+            className="p-1 border rounded w-fit h-fit bg-transparent"
             onClick={saveImage}
           >
             <DownloadRoundedIcon
@@ -163,6 +133,32 @@ function InfoTab() {
             />
           </button>
         </div>
+      </div>
+      <div class={`flex-col justify-center items-center`}>
+        <div
+          class={`w-full p-4 border flex justify-center items-center hover:cursor-pointer  ${
+            darkMode
+              ? `bg-slate-700 hover:bg-slate-600  text-white`
+              : `bg-yellow-100 hover:bg-yellow-400 `
+          }`}
+          onClick={() => {
+            // @ts-ignore
+            navigator.clipboard.writeText(roomCodeRef?.current?.innerText);
+            // @ts-ignore
+            alert("Copied code: " + roomCodeRef?.current?.innerText);
+          }}
+        >
+          Room code:
+          <div
+            class={`${
+              darkMode ? `bg-slate-800 ` : `bg-yellow-200 text-black`
+            } flex p-1 m-1`}
+            ref={roomCodeRef}
+          >
+            {socketConfig.roomCode}
+          </div>
+        </div>
+        <PlayerList playerList={playerList} />
       </div>
     </div>
   );

@@ -10,6 +10,11 @@ const list: PlayerType[] = [
   { id: "1", name: "Player 1", score: 25 },
   { id: "2", name: "Player 2", score: 30 },
   { id: "3", name: "Player 3", score: 35 },
+  { id: "3", name: "Player 4", score: 35 },
+  { id: "3", name: "Player 5", score: 35 },
+  { id: "3", name: "Player 6", score: 35 },
+  { id: "3", name: "Player 7", score: 35 },
+  { id: "3", name: "Player 8", score: 35 },
 ];
 export const players: RecoilState<PlayerType[]> = atom({
   key: "players",
