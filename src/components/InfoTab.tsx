@@ -158,6 +158,7 @@ function InfoTab() {
           onClick={() => {
             // @ts-ignore
             navigator.clipboard.writeText(roomCodeRef?.current?.innerText);
+
             // @ts-ignore
             alert("Copied code: " + roomCodeRef?.current?.innerText);
           }}

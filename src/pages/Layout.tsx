@@ -5,9 +5,6 @@ import { useRecoilValue } from "recoil";
 import { isDarkMode } from "../states";
 import { useEffect } from "preact/hooks";
 import { useSocket } from "../states/socket";
-import { lazy } from "preact/compat";
-
-const game = lazy(() => import("../game_loop"));
 
 function Layout() {
   const darkMode = useRecoilValue(isDarkMode);

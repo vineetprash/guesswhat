@@ -4,10 +4,11 @@ const CleanTextInput = ({
   value,
   className,
 }: {
-  onInput: () => void;
+  onInput: (e: any) => void;
   placeholder: string;
   value: string;
   className?: string;
+  type?: string;
 }) => {
   return (
     <input

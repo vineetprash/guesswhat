@@ -26,7 +26,7 @@ function Landing() {
       roomCode: roomCode,
       nickname: nickName,
     };
-
+    // @ts-ignore
     socket?.emit("join-room", emitData);
 
     navigate(`/room/${roomCode}`);
