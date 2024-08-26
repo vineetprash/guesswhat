@@ -1,10 +1,19 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { clientConfig, isDarkMode, players, socketConfigAtom } from "../states";
+import {
+  clientConfig,
+  isDarkMode,
+  players,
+  roomCode,
+  socketConfigAtom,
+} from "../states";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import FormatColorFillRoundedIcon from "@mui/icons-material/FormatColorFillRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import PlayerList from "./PlayerList";
 import { useRef } from "preact/hooks";
+import DottedButton from "./DottedButton";
+import { useSocket } from "../states/socket";
+import { useNavigate } from "react-router-dom";
 
 function InfoTab() {
   const playerList = useRecoilValue(players);
@@ -12,6 +21,8 @@ function InfoTab() {
   const socketConfig = useRecoilValue(socketConfigAtom);
   const darkMode = useRecoilValue(isDarkMode);
   const roomCodeRef = useRef(null);
+  const socket = useSocket();
+  const navigate = useNavigate();
 
   const changeColor = (event: any) => {
     setConfig((prevConfig) => ({
@@ -53,14 +64,14 @@ function InfoTab() {
     <div
       className={`${
         darkMode ? `bg-black text-white` : `bg-white text-black`
-      } gap-2 flex-col items-start md:items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 w-screen lg:w-fit h-full  transition-all duration-500`}
+      } gap-2 flex flex-col items-start md:items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 w-screen lg:w-fit h-full  transition-all duration-500`}
     >
       <div
         id="menu"
-        className="w-full  h-fit p-4 grid grid-cols-8 lg:grid lg:grid-cols-3 items-center mx-auto gap-2 "
+        className="w-full  h-fit p-4 grid grid-cols-8 lg:grid lg:grid-cols-3 items-center mx-auto gap-2 border rounded-xl border-dashed "
       >
         <div
-          className="menu-item flex col-span-2 lg:col-span-3 justify-center "
+          className="menu-item flex col-span-2 lg:col-span-1 justify-center "
           id="width-input-div"
           title="Thickness: 1"
         >
@@ -83,7 +94,7 @@ function InfoTab() {
           </select>
         </div>
         <div
-          className="menu-item flex col-span-2 lg:col-span-3 justify-center w-full px-0 "
+          className="menu-item flex col-span-2 lg:col-span-2 justify-center w-full px-0 "
           title="Choose color"
         >
           <input
@@ -97,7 +108,7 @@ function InfoTab() {
           />
         </div>
 
-        <div className="menu-item flex col-span-1">
+        <div className="menu-item flex col-span-1 mx-auto">
           <button
             id="clear-button"
             title="Clear fullscreen"
@@ -109,7 +120,7 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item flex col-span-1">
+        <div className="menu-item flex col-span-1 mx-auto">
           <button
             id="fill-button"
             title="Fill fullscreen"
@@ -121,7 +132,7 @@ function InfoTab() {
             />
           </button>
         </div>
-        <div className="menu-item flex col-span-1">
+        <div className="menu-item flex col-span-1 mx-auto">
           <button
             id="save-button"
             title="Download"
@@ -134,12 +145,12 @@ function InfoTab() {
           </button>
         </div>
       </div>
-      <div class={`flex-col justify-center items-center`}>
-        <div
-          class={`w-full p-4 border flex justify-center items-center hover:cursor-pointer  ${
+      <div class={`flex flex-col justify-center items-center gap-3`}>
+        <DottedButton
+          className={`w-full p-4 border items-center flex   ${
             darkMode
-              ? `bg-slate-700 hover:bg-slate-600  text-white`
-              : `bg-yellow-100 hover:bg-yellow-400 `
+              ? `black hover:bg-slate-900  text-white`
+              : `bg-yellow-100 hover:bg-yellow-400 border-black`
           }`}
           onClick={() => {
             // @ts-ignore
@@ -148,16 +159,33 @@ function InfoTab() {
             alert("Copied code: " + roomCodeRef?.current?.innerText);
           }}
         >
-          Room code:
-          <div
-            class={`${
-              darkMode ? `bg-slate-800 ` : `bg-yellow-200 text-black`
-            } flex p-1 m-1`}
-            ref={roomCodeRef}
-          >
-            {socketConfig.roomCode}
-          </div>
-        </div>
+          <>
+            Room code:
+            <div
+              class={`rounded ${
+                darkMode
+                  ? `black hover:bg-slate-700  text-white`
+                  : `bg-yellow-100 hover:bg-yellow-600 border-black`
+              } flex p-1 m-1`}
+              ref={roomCodeRef}
+            >
+              {socketConfig.roomCode}
+            </div>
+          </>
+        </DottedButton>
+        <DottedButton
+          className={`w-fit border border-dashed ${
+            darkMode
+              ? `black hover:bg-slate-900  text-white`
+              : `bg-yellow-100 hover:bg-yellow-400 border-black`
+          }`}
+          onClick={() => {
+            socket?.emit("leave-room", roomCode);
+            navigate("/");
+          }}
+        >
+          Leave Room
+        </DottedButton>
         <PlayerList playerList={playerList} />
       </div>
     </div>

@@ -1,11 +1,13 @@
 import { render } from "preact";
-import { App } from "./app.tsx";
+
 import "./index.css";
 import { RecoilRoot } from "recoil";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Landing from "./pages/Landing.tsx";
+import { SocketProvider } from "./states/socket.tsx";
+import { App } from "./app.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -15,24 +17,26 @@ const darkTheme = createTheme({
 
 const router = createBrowserRouter([
   {
-    path: "/practise",
-    element: <App />,
-  },
-  {
     path: "/",
     element: <Landing />,
   },
   {
-    path: "/room",
+    path: "/practise",
+    element: <App />,
+  },
+  {
+    path: "/room/:roomId",
     element: <App />,
   },
 ]);
 render(
-  <ThemeProvider theme={darkTheme}>
-    <RecoilRoot>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </RecoilRoot>
-  </ThemeProvider>,
+  <SocketProvider>
+    <ThemeProvider theme={darkTheme}>
+      <RecoilRoot>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </RecoilRoot>
+    </ThemeProvider>
+  </SocketProvider>,
   document.getElementById("app")!
 );

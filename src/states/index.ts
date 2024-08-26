@@ -1,5 +1,6 @@
 import { atom, RecoilState } from "recoil";
 import { PlayerType } from "../types";
+import { io } from "socket.io-client";
 
 export const isDarkMode = atom({
   key: "isDarkMode",
@@ -41,5 +42,7 @@ export const socketConfigAtom = atom({
   key: "socketConfig",
   default: {
     roomCode: "0000",
+    nickname: "",
+    avatar: "",
   },
 });

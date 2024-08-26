@@ -1,11 +1,23 @@
-import InfoTab from "./InfoTab";
-import { Canvas } from "./Canvas";
-import Navbar from "./Navbar";
+import InfoTab from "../components/InfoTab";
+import { Canvas } from "../components/Canvas";
+import Navbar from "../components/Navbar";
 import { useRecoilValue } from "recoil";
 import { isDarkMode } from "../states";
+import { useEffect } from "preact/hooks";
+import { useSocket } from "../states/socket";
+import { lazy } from "preact/compat";
+
+const game = lazy(() => import("../game_loop"));
 
 function Layout() {
   const darkMode = useRecoilValue(isDarkMode);
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket?.on("join-ack", () => {
+      console.log("Successfully joined the room in backend");
+    });
+  }, []);
   return (
     <div
       className={`flex ${
