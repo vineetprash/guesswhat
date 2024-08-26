@@ -27,7 +27,7 @@ function Landing() {
       nickname: nickName,
     };
 
-    socket!.emit("join-room", emitData);
+    socket?.emit("join-room", emitData);
 
     navigate(`/room/${roomCode}`);
   }
@@ -42,8 +42,16 @@ function Landing() {
       className={`min-h-screen bg-black w-full  flex gap-3 m-0 justify-center items-center`}
     >
       <div class={`  bg-black flex flex-col justify-center items-center gap-5`}>
-        <DottedButton onClick={practiseRoute}>Practise</DottedButton>
-        <DottedButton onClick={() => setShowRoomPanel((prev) => !prev)}>
+        <DottedButton
+          className="border-2 shadow-slate-100"
+          onClick={practiseRoute}
+        >
+          Practise
+        </DottedButton>
+        <DottedButton
+          className="border-2 shadow-slate-100"
+          onClick={() => setShowRoomPanel((prev) => !prev)}
+        >
           Join room
         </DottedButton>
       </div>

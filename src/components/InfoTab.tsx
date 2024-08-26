@@ -40,10 +40,10 @@ function InfoTab() {
   };
 
   const saveImage = () => {
-    // setConfig((prevConfig) => ({
-    //   ...prevConfig,
-    //   downloading: !clientConfigState.downloading,
-    // }));
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      downloading: !clientConfigState.downloading,
+    }));
   };
 
   const clearCanvas = () => {
@@ -64,85 +64,88 @@ function InfoTab() {
     <div
       className={`${
         darkMode ? `bg-black text-white` : `bg-white text-black`
-      } gap-2 flex flex-col items-start md:items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 w-screen lg:w-fit h-full  transition-all duration-500`}
+      } gap-2 flex flex-col items-start md:items-center justify-between border-r border-l border-slate-500 shadow-sm p-4 w-screen lg:w-fit lg:max-w-60 h-full  transition-all duration-500`}
     >
       <div
         id="menu"
-        className="w-full  h-fit p-4 grid grid-cols-8 lg:grid lg:grid-cols-3 items-center mx-auto gap-2 border rounded-xl border-dashed "
+        className="w-full  h-fit p-4 flex flex-col items-center mx-auto gap-2 border rounded-xl border-dashed "
       >
-        <div
-          className="menu-item flex col-span-2 lg:col-span-1 justify-center "
-          id="width-input-div"
-          title="Thickness: 1"
-        >
-          <select
-            label="Thickness"
-            onChange={changeWidth}
-            title={`Thickness`}
-            className={`${
-              darkMode
-                ? `bg-black text-white  border-slate-300  `
-                : `bg-white text-black border-slate-950 `
-            } w-32  border rounded `}
+        <div className={`flex gap-2`}>
+          <div
+            className="menu-item flex col-span-2 lg:col-span-1 justify-center  "
+            id="width-input-div"
+            title="Thickness: 1"
           >
-            <option value={1}>1</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={30}>30</option>
-            <option value={40}>40</option>
-            <option value={50}>50</option>
-          </select>
-        </div>
-        <div
-          className="menu-item flex col-span-2 lg:col-span-2 justify-center w-full px-0 "
-          title="Choose color"
-        >
-          <input
-            id="color-input"
-            type="color"
-            height="200px"
-            width="300px"
-            className={`w-32`}
-            defaultValue={clientConfigState.strokeStyle}
-            onChange={changeColor}
-          />
-        </div>
-
-        <div className="menu-item flex col-span-1 mx-auto">
-          <button
-            id="clear-button"
-            title="Clear fullscreen"
-            className="p-1 border rounded w-fit h-fit bg-transparent"
-            onClick={clearCanvas}
+            <select
+              label="Thickness"
+              onChange={changeWidth}
+              title={`Thickness`}
+              className={`${
+                darkMode
+                  ? `bg-black text-white  border-slate-300  `
+                  : `bg-white text-black border-slate-950 `
+              }   border rounded `}
+            >
+              <option value={1}>1</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={30}>30</option>
+              <option value={40}>40</option>
+              <option value={50}>50</option>
+            </select>
+          </div>
+          <div
+            className="menu-item flex col-span-2 lg:col-span-2 justify-center w-full px-0 "
+            title="Choose color"
           >
-            <DeleteOutlineRoundedIcon
-              sx={{ color: `${darkMode ? `white` : `black`}` }}
+            <input
+              id="color-input"
+              type="color"
+              height="200px"
+              width="300px"
+              className={``}
+              defaultValue={clientConfigState.strokeStyle}
+              onChange={changeColor}
             />
-          </button>
+          </div>
         </div>
-        <div className="menu-item flex col-span-1 mx-auto">
-          <button
-            id="fill-button"
-            title="Fill fullscreen"
-            className="p-1 border rounded w-fit h-fit bg-transparent"
-            onClick={fillCanvas}
-          >
-            <FormatColorFillRoundedIcon
-              sx={{ color: `${darkMode ? `white` : `black`}` }}
-            />
-          </button>
-        </div>
-        <div className="menu-item flex col-span-1 mx-auto">
-          <button
-            id="save-button"
-            title="Download"
-            className="p-1 border rounded w-fit h-fit bg-transparent"
-            onClick={saveImage}
-          >
-            <DownloadRoundedIcon
-              sx={{ color: `${darkMode ? `white` : `black`}` }}
-            />
-          </button>
+        <div className={`flex`}>
+          <div className="menu-item flex col-span-1 mx-auto">
+            <button
+              id="clear-button"
+              title="Clear fullscreen"
+              className="p-1 border rounded w-fit h-fit bg-transparent"
+              onClick={clearCanvas}
+            >
+              <DeleteOutlineRoundedIcon
+                sx={{ color: `${darkMode ? `white` : `black`}` }}
+              />
+            </button>
+          </div>
+          <div className="menu-item flex col-span-1 mx-auto">
+            <button
+              id="fill-button"
+              title="Fill fullscreen"
+              className="p-1 border rounded w-fit h-fit bg-transparent"
+              onClick={fillCanvas}
+            >
+              <FormatColorFillRoundedIcon
+                sx={{ color: `${darkMode ? `white` : `black`}` }}
+              />
+            </button>
+          </div>
+          <div className="menu-item flex col-span-1 mx-auto">
+            <button
+              id="save-button"
+              title="Download"
+              className="p-1 border rounded w-fit h-fit bg-transparent"
+              onClick={saveImage}
+            >
+              <DownloadRoundedIcon
+                sx={{ color: `${darkMode ? `white` : `black`}` }}
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div class={`flex flex-col justify-center items-center gap-3`}>
@@ -150,7 +153,7 @@ function InfoTab() {
           className={`w-full p-4 border items-center flex   ${
             darkMode
               ? `black hover:bg-slate-900  text-white`
-              : `bg-yellow-100 hover:bg-yellow-400 border-black`
+              : `bg-yellow-300 hover:bg-yellow-400 border-black  text-black`
           }`}
           onClick={() => {
             // @ts-ignore
@@ -165,7 +168,7 @@ function InfoTab() {
               class={`rounded ${
                 darkMode
                   ? `black hover:bg-slate-700  text-white`
-                  : `bg-yellow-100 hover:bg-yellow-600 border-black`
+                  : `bg-yellow-300 hover:bg-yellow-600 border-black text-black`
               } flex p-1 m-1`}
               ref={roomCodeRef}
             >
@@ -177,7 +180,7 @@ function InfoTab() {
           className={`w-fit border border-dashed ${
             darkMode
               ? `black hover:bg-slate-900  text-white`
-              : `bg-yellow-100 hover:bg-yellow-400 border-black`
+              : `bg-yellow-300 hover:bg-yellow-400 border-black text-black`
           }`}
           onClick={() => {
             socket?.emit("leave-room", roomCode);

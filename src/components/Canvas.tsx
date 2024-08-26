@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useRef, useState, useEffect, useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { clientConfig, isDarkMode } from "../states";
+import { canvasAtom, clientConfig, isDarkMode } from "../states";
 
 const MIN_WIDTH = 0;
 export const Canvas = () => {
@@ -153,8 +153,8 @@ export const Canvas = () => {
   useEffect(changeWidth, [clientConfigState.strokeWidth]);
   useEffect(changeColor, [clientConfigState.strokeStyle]);
   useEffect(clearCanvas, [clientConfigState.erased]);
+  // useEffect(saveImage, [clientConfigState.downloading]);
   const width = useMemo(() => {}, []);
-  //   useEffect(saveImage, [clientConfigState.downloading]);
 
   return (
     <div
@@ -177,7 +177,7 @@ export const Canvas = () => {
           ref={canvasDesktopRef}
           className={`${
             darkMode ? `border-slate-400` : `border-black`
-          } flex  border border-lg rounded  cursor-crosshair touch-none `}
+          } flex  border border-lg rounded  cursor-crosshair touch-none transition-all duration-400 `}
           id="canvas-desktop"
           height={`500px`}
           width={`700px`}

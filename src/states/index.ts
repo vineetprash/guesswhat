@@ -1,6 +1,7 @@
 import { atom, RecoilState } from "recoil";
 import { PlayerType } from "../types";
 import { io } from "socket.io-client";
+import { useRef } from "preact/hooks";
 
 export const isDarkMode = atom({
   key: "isDarkMode",
